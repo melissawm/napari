@@ -44,8 +44,24 @@ jobs:
       #  run: make linkcheck-files
 
       - name: Upload artifact
+        id: upload
         uses: actions/upload-artifact@v2
         with:
           name: docs
           path: docs/_build
+      - name: Retrieve artifact url
+        id: url
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "::set-output name=DOCS_URL::$(curl -v -H "Authorization: token $GITHUB_TOKEN" -s https://api.github.com/repos/melissawm/napari/actions/artifacts | jq '[.artifacts[] | {name : .name, archive_download_url : .archive_download_url} | select (.name == "docs") .archive_download_url][0]')"
+      - name: Create comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          recreate: true
+          message: |
+            debug: ${{ steps.url.outputs.DOCS_URL }}
+            Latest docs artifact: [docs.zip](${{ steps.url.outputs.DOCS_URL }}) (${{github.event.pull_request.head.sha}})
 
