@@ -40,8 +40,17 @@ jobs:
           run: make docs
 
       - name: Upload artifact
+        id: upload
         uses: actions/upload-artifact@v2
         with:
           name: docs
           path: docs/_build
-
+      - name: Retrieve artifact url
+        run: |
+          echo ::set-env name=DOCS_URL::curl -s https://api.github.com/repos/melissawm/napari/actions/artifacts | jq '[.artifacts[] | {name : .name, archive_download_url : .archive_download_url}]' | jq -r '.[0] | select (.name == "docs") | .archive_download_url'
+      - name: Create comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          recreate: true
+          message: |
+            Latest docs artifact: [Docs artifact file](${{ env.DOCS_URL }})
