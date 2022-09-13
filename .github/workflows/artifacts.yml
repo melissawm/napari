@@ -11,11 +11,19 @@ jobs:
     name: Add artifact link to PR comments
     runs-on: ubuntu-latest
     steps:
-        - uses: tonyhallett/artifacts-url-comments@v1.1.0
+        - name: Create comment
+          uses: marocchino/sticky-pull-request-comment@v2
+          with:
+            recreate: true
+            message: |
+              ${{ steps.update.outputs }}
+        - name: Update comment with artifact
+          id: update
+          uses: tonyhallett/artifacts-url-comments@v1.1.0
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           with:
-            prefix: Click here to download the docs artifacts
+            prefix: Click below to download the docs artifacts
             suffix: (zip file)
             format: name
             addTo: pull
