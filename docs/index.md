@@ -43,7 +43,7 @@ theme:
       url: https://www.napari-hub.org
 ---
 
-# napari
+# napari: hello, there!
 
 ## Multi-dimensional image viewer for python
 
