@@ -1,7 +1,7 @@
 name: Comment on pull request
 on:
   workflow_run:
-    workflows: ['Build docs']
+    workflows: ['Build Docs']
     types: [completed]
 jobs:
   pr_comment:
@@ -37,7 +37,6 @@ jobs:
 
             const {owner, repo} = context.repo;
             const run_id = ${{github.event.workflow_run.id}};
-            const commit_sha = ${{github.event.pull_request.head.sha}};
 
             const pull_requests = ${{ toJSON(github.event.workflow_run.pull_requests) }};
             if (!pull_requests.length) {
