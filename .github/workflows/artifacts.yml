@@ -37,6 +37,7 @@ jobs:
 
             const {owner, repo} = context.repo;
             const run_id = ${{github.event.workflow_run.id}};
+            const commit_sha = ${{github.event.pull_request.head.sha}};
 
             const pull_requests = ${{ toJSON(github.event.workflow_run.pull_requests) }};
             if (!pull_requests.length) {
@@ -50,7 +51,7 @@ jobs:
             }
             let body = `Download the artifacts for this pull request:\n`;
             for (const art of artifacts) {
-              body += `\n* [${art.name}.zip](https://nightly.link/${owner}/${repo}/actions/artifacts/${art.id}.zip) (${{github.event.pull_request.head.sha}})`;
+              body += `\n* [${art.name}.zip](https://nightly.link/${owner}/${repo}/actions/artifacts/${art.id}.zip) (${commit_sha})`;
             }
 
             core.info("Review thread message body:", body);
