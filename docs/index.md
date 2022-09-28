@@ -43,7 +43,7 @@ theme:
       url: https://www.napari-hub.org
 ---
 
-# napari
+# napari: my test!
 
 ## Multi-dimensional image viewer for python
 
