@@ -53,7 +53,7 @@ jobs:
           command: |
             . venv/bin/activate
             cd napari-docs
-            xvfb-run --auto-servernum make docs GALLERY_PATH=../examples/
+            xvfb-run --auto-servernum make docs GALLERY_PATH=../../../examples/
       - store_artifacts:
           path: napari-docs/docs/_build/
       - persist_to_workspace:
