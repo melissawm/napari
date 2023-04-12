@@ -17,6 +17,8 @@ if TYPE_CHECKING:
 class Viewer(ViewerModel):
     """Napari ndarray viewer.
 
+    Hello, CircleCI!
+    
     Parameters
     ----------
     title : string, optional
