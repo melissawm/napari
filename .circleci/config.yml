@@ -40,7 +40,6 @@ jobs:
             python -m venv venv
             . venv/bin/activate
             python -m pip install --upgrade pip
-            python -m pip install -r requirements.txt
       - run:
           name: Clone docs repo
           command: git clone git@github.com:napari/docs.git napari-docs
@@ -54,7 +53,7 @@ jobs:
           command: |
             . venv/bin/activate
             cd napari-docs
-            xvfb-run --auto-servernum make docs-build GALLERY_PATH=../examples/
+            xvfb-run --auto-servernum make docs GALLERY_PATH=../../examples/
       - store_artifacts:
           path: napari-docs/docs/_build/
       - persist_to_workspace:
